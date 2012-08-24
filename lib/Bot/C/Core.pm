@@ -199,7 +199,7 @@ sub _ev_on_msg
         if (lc($nick) eq lc($proxy_ref->{nick}))
         {
             my $channel = $proxy_ref->{target_channel};
-            Bot::V::IRC->instance()->privmsg($channel, "<$nick> $msg");
+            Bot::V::IRC->instance()->privmsg($channel, $msg);
         }
     }
 }
