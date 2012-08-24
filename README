@@ -12,6 +12,7 @@ Requirements:
 
     - Perl 5.10.1+
     - Non-core Perl modules
+        - libwww-perl
         - Class::Singleton 1.4+
         - common::sense 3.3+
         - JSON::PP 2.27104+
