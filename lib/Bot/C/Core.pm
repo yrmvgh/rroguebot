@@ -194,7 +194,7 @@ sub _ev_on_public
             my $target = $proxy_ref->{nick};
 	    # special hack for henzell ! commands
 	    if ($target eq "Sequell" and $msg =~ /!(?:$FOR_HENZELL)\b/) {
-		$target = "Henzell";
+		$target = "Wenzell";
 	    }
             Bot::V::Log->instance()->log("MSG_OUT($target) $msg");
             Bot::V::IRC->instance()->privmsg($target, $msg);
@@ -202,7 +202,7 @@ sub _ev_on_public
     }
 }
 
-my $CLANPAGE = "http://crawl.akrasiac.org/tourney11/clans/ophanim.html";
+my $CLANPAGE = "http://seleniac.org/crawl/tourney/12b/clans/evilmike.html";
 sub current_combos
 {
     my $clandata = get($CLANPAGE);
@@ -254,7 +254,7 @@ sub _ev_on_msg
 
     if ($msg =~ /246813579/) {
 	my $topic = compute_topic($msg);
-	Bot::V::IRC->instance()->topic("##catlobe", $topic);
+	Bot::V::IRC->instance()->topic("##hexpistols", $topic);
 	return;
     }
 
