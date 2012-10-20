@@ -34,7 +34,7 @@ sub _ev_tick
     my ($self) = @_[OBJECT];
 
     my $target = "Sequell";
-    my $msg = "!lg teamcatlobe won t turns<=246813579 s=char";
+    my $msg = "!lg hexpistols won t turns<=246813579 s=char";
 
     Bot::V::Log->instance()->log("MSG_OUT($target) $msg");
     Bot::V::IRC->instance()->privmsg($target, $msg);
