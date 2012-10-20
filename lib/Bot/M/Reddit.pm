@@ -85,7 +85,7 @@ sub get_msgs
         return undef unless $data;
 
         my @links;
-        $@ = q{};
+        local $@;
         eval
         {
             my $raw_links_ref = $data->{data}->{children};
@@ -103,6 +103,7 @@ sub get_msgs
 
                 my %link = map
                 {
+		    $link_ref->{data}->{$_} =~ s/\n\r//g; # Somehow these get into the data :/
                     $_ => $link_ref->{data}->{$_}
                 } qw(id author title);
 

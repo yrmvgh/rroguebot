@@ -18,7 +18,7 @@ use common::sense;
 use base 'Class::Singleton';
 
 use Carp;
-use LWP::UserAgent;
+use LWP::Simple;
 use POE;
 use POE::Component::IRC;
 use Time::HiRes qw(time);
@@ -30,8 +30,14 @@ use Bot::V::IRC;
 use Bot::V::Log;
 
 sub _ev_tick
-{   
+{
     my ($self) = @_[OBJECT];
+
+    my $target = "Sequell";
+    my $msg = "!lg teamcatlobe won t turns<=246813579 s=char";
+
+    Bot::V::Log->instance()->log("MSG_OUT($target) $msg");
+    Bot::V::IRC->instance()->privmsg($target, $msg);
 
     my $subreddits_ref = Bot::M::Config->instance()->get_key('subreddits');
 
@@ -96,6 +102,14 @@ sub _ev_on_connect
         Bot::V::IRC->instance()->join($channel);
     }
 }
+
+# Not all of these will work in PM anyways, and there is a little
+# overlap with Sequell for unimportant commands.
+my $FOR_HENZELL = join '|', qw(
+    aplayers apt cdefine cmdinfo coffee copysave dump echo eplayers ftw
+    function help idle learn macro messages nick players rc rng screensize
+    seen send skill source tell time vault whereis wtf
+);
 
 # The bot has received a public message.  Parse it for commands and
 # respond to interesting things.
@@ -178,10 +192,55 @@ sub _ev_on_public
             substr($msg, 0, length($prefix)) eq $prefix)
         {
             my $target = $proxy_ref->{nick};
+	    # special hack for henzell ! commands
+	    if ($target eq "Sequell" and $msg =~ /!(?:$FOR_HENZELL)\b/) {
+		$target = "Henzell";
+	    }
             Bot::V::Log->instance()->log("MSG_OUT($target) $msg");
             Bot::V::IRC->instance()->privmsg($target, $msg);
         }
     }
+}
+
+my $CLANPAGE = "http://crawl.akrasiac.org/tourney11/clans/ophanim.html";
+sub current_combos
+{
+    my $clandata = get($CLANPAGE);
+    if (defined($clandata)) {
+	my ($gamedata) = ($clandata =~ m|Ongoing Games</h3>\s*<div>\s*(.*?)\s*</div>|m);
+	my @games = split /<br \/>/, $gamedata;
+	my @combos = ();
+	foreach my $game (@games) {
+	    if (my ($combo) = ($game =~ /\(L\d+ (....)/)) {
+		push @combos, $combo;
+	    }
+	}
+	@combos = sort @combos;
+	return "@combos";
+    } else {
+	return "unknown"
+    }
+}
+
+my %RACES   = map { $_ => 1 } qw(Hu HE DE SE MD DD HO Mf Ha Ko Sp Na Ce Og Tr Mi Ke Dr Dg Ds Mu Gh Vp Fe);
+my %CLASSES = map { $_ => 1 } qw(Fi Gl Mo Hu As Ar Wn Be AK CK DK Pr He Sk En Tm St Wr Wz Cj Su Ne FE IE AE EE VM);
+
+sub compute_topic
+{
+    my ($msg) = @_;
+
+    my %races   = %RACES;
+    my %classes = %CLASSES;
+    my ($combos) = ($msg =~ /:(.*)$/);
+    foreach my $word (split / /, $combos) {
+	my ($race, $class) = ($word =~ /(..)(..),?/) or next;
+	delete $races{$race};
+	delete $classes{$class};
+    }
+
+    return "RACES: " . (join ' ', sort { lc $a cmp lc $b } keys %races)
+	. " | CLASSES: " . (join ' ', sort { lc $a cmp lc $b } keys %classes)
+	. " | Ongoing games: " . current_combos();
 }
 
 sub _ev_on_msg
@@ -192,6 +251,12 @@ sub _ev_on_msg
     my $nick    = (split /!/, $who)[0];
 
     Bot::V::Log->instance()->log("MSG_IN($nick) $msg");
+
+    if ($msg =~ /246813579/) {
+	my $topic = compute_topic($msg);
+	Bot::V::IRC->instance()->topic("##catlobe", $topic);
+	return;
+    }
 
     my $proxies_ref = Bot::M::Config->instance()->get_key('proxies');
     for my $proxy_ref (@$proxies_ref)
