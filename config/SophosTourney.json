@@ -1,0 +1,31 @@
+{
+    "irc_channels": [
+        "##hexpistols"
+    ],
+    "proxies": [
+        {
+            "prefix": "??",
+            "nick": "Wenzell",
+            "target_channel": "##hexpistols"
+        },
+        {
+            "prefix": "%??",
+            "nick": "Cheibriados",
+            "target_channel": "##hexpistols"
+        },
+        {
+            "prefix": "!",
+            "nick": "Sequell",
+            "target_channel": "##hexpistols"
+        }
+    ],
+    "subreddits": [
+    ],
+    "irc_nick": "SophosTourney",
+    "irc_nickserv_password": "",
+    "irc_ircname": "Like SophosTwo of ##reddit-roguelikes but for the DCSS tourney",
+    "irc_server": "calvino.freenode.net",
+    "irc_port": 6667,
+    "redis_host": "localhost",
+    "redis_port": 6379
+}
