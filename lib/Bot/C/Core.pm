@@ -222,8 +222,8 @@ sub current_combos
     }
 }
 
-my %RACES   = map { $_ => 1 } qw(Hu HE DE SE MD DD HO Mf Ha Ko Sp Na Ce Og Tr Mi Ke Dr Dg Ds Mu Gh Vp Fe);
-my %CLASSES = map { $_ => 1 } qw(Fi Gl Mo Hu As Ar Wn Be AK CK DK Pr He Sk En Tm St Wr Wz Cj Su Ne FE IE AE EE VM);
+my %RACES   = map { $_ => 1 } qw(Ce DD DE Dg Dr Ds Fe Gh Ha HE HO Hu Ko Mf Mi Mu Na Og Op SE Sp Te Tr Vp);
+my %CLASSES = map { $_ => 1 } qw(AE AK AM Ar As Be Cj CK DK EE En FE Fi Gl He Hu IE Mo Ne Pr Sk St Su Tm VM Wn Wr Wz);
 
 sub compute_topic
 {
