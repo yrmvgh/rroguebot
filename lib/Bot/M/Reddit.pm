@@ -125,7 +125,7 @@ sub get_msgs
             for my $link_ref (@links)
             {
                 my $msg = "$link_ref->{author}: $link_ref->{title} " .
-                          "<$link_ref->{_url}>";
+                          "| $link_ref->{_url}";
                 push(@msgs, $msg);
             }
         }
