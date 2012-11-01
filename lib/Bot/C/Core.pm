@@ -238,9 +238,12 @@ sub compute_topic
 	delete $classes{$class};
     }
 
-    return "RACES: " . (join ' ', sort { lc $a cmp lc $b } keys %races)
-	. " | CLASSES: " . (join ' ', sort { lc $a cmp lc $b } keys %classes)
-	. " | Ongoing games: " . current_combos();
+    my $combos = current_combos();
+    return sprintf 'RACES: %s | CLASSES: %s | %s',
+                   join(' ', sort keys %races)   || 'ALL WON!',
+                   join(' ', sort keys %classes) || 'ALL WON!',
+	           $combos ? $combos ne 'unknown' ? "Ongoing games: $combos"
+			   : "Couldn't get games from: $CLANPAGE" : 'No games ongoing';
 }
 
 sub _ev_on_msg
