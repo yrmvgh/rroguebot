@@ -124,6 +124,7 @@ sub get_msgs
             # Format each link and add to the message list.
             for my $link_ref (@links)
             {
+                $link_ref->{title} =~ tr/\n//d;
                 my $msg = "$link_ref->{author}: $link_ref->{title} " .
                           "| $link_ref->{_url}";
                 push(@msgs, $msg);
