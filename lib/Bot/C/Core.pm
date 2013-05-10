@@ -180,6 +180,8 @@ sub _ev_on_public
             my $target = $proxy_ref->{nick};
             Bot::V::Log->instance()->log("MSG_OUT($target) $msg");
             Bot::V::IRC->instance()->privmsg($target, $msg);
+            # So it (hopefully) goes to the channel it came from.
+            push @{$self->{bot_queries}}, $channel;
         }
     }
 }
@@ -198,7 +200,7 @@ sub _ev_on_msg
     {
         if (lc($nick) eq lc($proxy_ref->{nick}))
         {
-            my $channel = $proxy_ref->{target_channel};
+            my $channel = pop @{$self->{bot_queries}};
             Bot::V::IRC->instance()->privmsg($channel, $msg);
         }
     }
