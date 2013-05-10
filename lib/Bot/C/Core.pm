@@ -200,8 +200,10 @@ sub _ev_on_msg
     {
         if (lc($nick) eq lc($proxy_ref->{nick}))
         {
-            my $channel = pop @{$self->{bot_queries}};
+            my $channel = pop @{$self->{bot_queries}} || $self->{last_channel};
             Bot::V::IRC->instance()->privmsg($channel, $msg);
+            # This should/might handle the case of multi-msg responses.
+            $self->{last_channel} = $channel unless @{$self->{bot_queries}};
         }
     }
 }
