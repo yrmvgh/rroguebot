@@ -81,7 +81,7 @@ sub get_msgs
 
     if ($r->is_success)
     {
-        my $data = $self->{json}->decode($r->decoded_content);
+        my $data = eval { $self->{json}->decode($r->decoded_content) };
         return undef unless $data;
 
         my @links;
