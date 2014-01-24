@@ -50,8 +50,6 @@ sub _get_redis
     if (!$self->{redis} || !$self->{redis}->ping())
     {
         my $config = Bot::M::Config->instance();
-        return undef unless $config;
-
         my $server = $config->get_key('redis_host') || REDIS_DEF_SERVER;
         my $port = $config->get_key('redis_port') || REDIS_DEF_PORT;
         $self->{redis} = Redis->new(server => "$server:$port");
@@ -75,11 +73,12 @@ Returns a message suitable for sending to an IRC channel or IRC user in
 response to the operation.
 
 =cut
+
 sub add_cached
 {
     my ($self, $raw_key, $raw_value) = @_;
 
-    my $redis = $self->_get_redis() || return undef;
+    my $redis = $self->_get_redis();
 
     my $key = lc("cache.$raw_key");
     my $value = $raw_value;
@@ -134,11 +133,12 @@ Returns a message suitable for sending to an IRC channel or IRC user in
 response to the operation.
 
 =cut
+
 sub del_cached
 {
     my ($self, $raw_key, $raw_index) = @_;
 
-    my $redis = $self->_get_redis() || return undef;
+    my $redis = $self->_get_redis();
 
     my $key = lc("cache.$raw_key");
     my $count = $redis->llen($key);
@@ -195,11 +195,12 @@ Returns a formatted, natural-language response to the query, suitable for
 sending directly to an IRC channel or IRC user.
 
 =cut
+
 sub query_cached
 {
     my ($self, $raw_key, $raw_index) = @_;
 
-    my $redis = $self->_get_redis() || return undef;
+    my $redis = $self->_get_redis();
 
     my $key = lc("cache.$raw_key");
     my $index = $raw_index // 1;
@@ -246,11 +247,12 @@ Returns a true value if $topic and $id have been recorded as having been
 seen in the past.  Returns false otherwise.
 
 =cut
+
 sub have_seen
 {
     my ($self, $topic, $id) = @_;
 
-    my $redis = $self->_get_redis() || return undef;
+    my $redis = $self->_get_redis();
 
     my $key = "$topic.seen.$id";
 
@@ -267,9 +269,9 @@ sub add_seen
 {
     my ($self, $topic, $id) = @_;
 
-    my $redis = $self->_get_redis() || return undef;
 
     my $key = "$topic.seen.$id";
+    my $redis = $self->_get_redis();
 
     $redis->incr($key);
 }
