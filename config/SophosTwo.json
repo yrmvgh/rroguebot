@@ -1,0 +1,40 @@
+{
+    "irc_channels": [
+        "##reddit-roguelikes"
+    ],
+    "proxies": [
+        {
+            "prefix": "??",
+            "nick": "Sequell"
+        },
+        {
+            "prefix": "@??",
+            "nick": "Gretell"
+        },
+        {
+            "prefix": "!",
+            "nick": "Sequell"
+        }
+    ],
+    "subreddits": [
+        {
+            "subreddit": "roguelikes",
+            "target_channel": "##reddit-roguelikes"
+        },
+        {
+            "subreddit": "dcss",
+            "target_channel": "##reddit-roguelikes"
+        },
+        {
+            "subreddit": "roguelikedev",
+            "target_channel": "##reddit-roguelikes"
+        }
+    ],
+    "irc_nick": "SophosTwo",
+    "irc_nickserv_password": "REDACTED",
+    "irc_ircname": "/r/roguelikes bot for ##reddit-roguelikes",
+    "irc_server": "irc.freenode.org",
+    "irc_port": 6667,
+    "redis_host": "localhost",
+    "redis_port": 6379
+}
