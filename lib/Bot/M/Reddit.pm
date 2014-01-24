@@ -70,66 +70,47 @@ sub get_msgs
 {
     my ($self, $subreddit) = @_;
 
-    my $url = $self->_reddit_new_url($subreddit);
-    return undef unless $url;
+    my $url = $self->_reddit_new_url($subreddit) or return;
 
     Bot::V::Log->instance()->log("Requesting URL [$url]");
+
     my $r = $self->{ua}->get($url);
-    return undef unless $r;
 
-    my @msgs;
-
-    if ($r->is_success)
+    if ($r and $r->is_success)
     {
-        my $data = eval { $self->{json}->decode($r->decoded_content) };
-        return undef unless $data;
 
-        my @links;
-        $@ = q{};
-        eval
-        {
-            my $raw_links_ref = $data->{data}->{children};
+        my $db = Bot::M::DB->instance();
+        my @links = eval {
+            my $listing   = $self->{json}->decode($r->decoded_content);
+            my @all_links = map $_->{data}, @{ $listing->{data}{children} };
 
             # For each link we found, get the vital information store it for
             # later.  Don't record links we've already seen or links that do
             # not match the Reddit entity ID whitelist pattern.
-            for my $link_ref (@$raw_links_ref)
-            {
-                my $id = $link_ref->{data}->{id};
-                next unless defined($id) && $id =~ /^\w+$/;
+            my @new_links = grep {
+              $_->{id} and !$db->have_seen('reddit', $_->{id})
+            } @all_links;
 
-                my $db = Bot::M::DB->instance();
-                next if $db->have_seen('reddit', $id);
+            $db->add_seen('reddit', map $_->{id}, @new_links);
 
-                my %link = map
-                {
-                    $_ => $link_ref->{data}->{$_}
-                } qw(id author title);
-
-                $link{_url} = "http://redd.it/$link{id}";
-
-                push(@links, \%link);
-
-                $db->add_seen('reddit', $id);
-            }
+            map +{
+                id     => $_->{id},
+                url    => "http://redd.it/$_->{id}",
+                author => $_->{author},
+                title  => $_->{title} =~ tr/\n//dr,
+            }, @new_links;
         };
 
-        if ($@)
-        {
+        if ($@) {
             Bot::V::Log->instance()->log("Unable to parse Reddit JSON: $@");
-            return undef;
+            return;
         }
-        else
-        {
-            # Format each link and add to the message list.
-            for my $link_ref (@links)
-            {
-                $link_ref->{title} =~ tr/\n//d;
-                my $msg = "$link_ref->{author}: $link_ref->{title} " .
-                          "| $link_ref->{_url}";
-                push(@msgs, $msg);
-            }
-        }
+
+        return [
+          map sprintf(
+            '%s: %s | /r/%s | %s', @$_{qw(author title)}, $subreddit, $_->{url}
+          ), @links
+        ];
     }
     else
     {
@@ -137,10 +118,8 @@ sub get_msgs
         (
             "Reddit request for subreddit [$subreddit] did not succeed"
         );
-        return undef;
+        return;
     }
-
-    return \@msgs;
 }
 
 1;

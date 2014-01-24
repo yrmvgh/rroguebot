@@ -259,21 +259,20 @@ sub have_seen
     return $redis->exists($key) ? 1 : 0;
 }
 
-=head2 add_seen($topic, $id)
+=head2 add_seen($topic, @ids)
 
-Increments the counter for the $topic and $id so that have_seen() will return
-true for this combination in the future.
+Increments the counter for the $topic and @ids so that have_seen() will return
+true for these combinations in the future.
 
 =cut
+
 sub add_seen
 {
-    my ($self, $topic, $id) = @_;
+    my ($self, $topic, @ids) = @_;
 
-
-    my $key = "$topic.seen.$id";
     my $redis = $self->_get_redis();
 
-    $redis->incr($key);
+    $redis->incr("$topic.seen.$_") for @ids;
 }
 
 1;
