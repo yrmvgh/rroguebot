@@ -38,28 +38,22 @@ sub parse_config
 {
     my ($self, $file) = @_;
 
-    my $fh = IO::File->new($file, '<') or return undef;
-    my $buf;
-    my $num_read_total = 0;
-    while (my $num_read_cur = $fh->read($buf, 4096, $num_read_total))
-    {
-        $num_read_total += $num_read_cur;
-    }
-    $fh->close();
+    my $config = eval {
+      local(@ARGV, $/) = $file;
+      JSON::PP->new->decode(<>);
+    };
 
-    my $json = JSON::PP->new();
-    $self->{config} = $json->decode($buf);
-
-    if ($self->{config})
+    if ($config)
     {
+        $self->{config} = $config;
         Bot::V::Log->instance()->log('Parsed configuration');
     }
     else
     {
-        Bot::V::Log->instance()->log('Failed to parse configuration');
+        Bot::V::Log->instance()->log("Failed to parse configuration '$file' - $@");
     }
 
-    return $self->{config} ? 1 : 0;
+    return $config;
 }
 
 =head2 get_key($key)
