@@ -195,12 +195,16 @@ sub _ev_on_msg
 
     Bot::V::Log->instance()->log("MSG_IN($nick) $msg");
 
+    # Use this to de-dupe messages when we have the same proxy bot
+    # handling multiple prefixes i.e Sequell at the time of writing.
+    my %seen;
     my $proxies_ref = Bot::M::Config->instance()->get_key('proxies');
     for my $proxy_ref (@$proxies_ref)
     {
         if (lc($nick) eq lc($proxy_ref->{nick}))
         {
             my $channel = pop @{$self->{bot_queries}} || $self->{last_channel};
+            next if $seen{"$nick$channel$msg"}++;
             Bot::V::IRC->instance()->privmsg($channel, $msg);
             # This should/might handle the case of multi-msg responses.
             $self->{last_channel} = $channel unless @{$self->{bot_queries}};
