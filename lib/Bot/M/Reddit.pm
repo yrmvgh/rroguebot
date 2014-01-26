@@ -27,6 +27,7 @@ use base 'Class::Singleton';
 
 use JSON::PP;
 use LWP::UserAgent;
+use HTML::Entities qw(decode_entities);
 
 use Bot::M::DB;
 use Bot::V::Log;
@@ -66,6 +67,7 @@ an array ref containing those messages.  Returns undef on error (e.g. if
 Reddit is down, etc.).
 
 =cut
+
 sub get_msgs
 {
     my ($self, $subreddit) = @_;
@@ -97,7 +99,7 @@ sub get_msgs
                 id     => $_->{id},
                 url    => "http://redd.it/$_->{id}",
                 author => $_->{author},
-                title  => $_->{title} =~ tr/\n//dr,
+                title  => decode_entities($_->{title} =~ tr/\n//dr),
             }, @new_links;
         };
 
