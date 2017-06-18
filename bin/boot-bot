@@ -1,14 +1,13 @@
 #!/bin/bash
 
-cd /home/dbrook/dev/rroguebot
+cd /home/userguy/Repos/rroguebot
 
-# We should only run on master!
+# The above should be the full path to the repo you cloned.
+
 if git checkout master
 then
-    kill `ps -fp $(pgrep perl) | grep rroguebot | awk '{print $2}'`
-    source ~/perl5/perlbrew/etc/bashrc
     logfile="logs/bot-$(date +%Y%m%d%H%M%S).log"
-    nohup perl -Ilib bin/rroguebot.pl -c config/SophosTwo.json &> $logfile &
+    nohup perl -Ilib bin/rroguebot.pl -c exampleconfig.json &> $logfile &
     echo Bot booted, logging to $logfile
     sleep 1
     exec tail -f $logfile
