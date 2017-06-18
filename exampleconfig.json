@@ -128,7 +128,7 @@
         {
             "subreddit": "WazHack",
             "target_channel": "##reddit-roguelikes-links"
-        },
+        }
     ],
     "irc_nick": "SophosThree",
     "irc_nickserv_password": "REDACTED",
