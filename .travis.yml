@@ -1,0 +1,9 @@
+notifications:
+    irc:
+        channels: "chat.freenode.net##reddit-roguelikes-links"
+        on_success: always
+        on_failure: always
+        use_notice: true
+        template:
+          - "%{commit_subject} (%{result} %{branch} #%{build_number}) %{build_url}
+            Diff: %{compare_url}"

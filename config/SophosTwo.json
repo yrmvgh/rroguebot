@@ -1,38 +1,138 @@
 {
     "irc_channels": [
-        "##reddit-roguelikes"
+        "##reddit-roguelikes-links"
     ],
     "proxies": [
         {
-            "prefix": "??",
-            "nick": "Sequell"
+            "prefix": "@",
+            "nick": "Pinoclone"
         },
         {
-            "prefix": "@??",
-            "nick": "Gretell"
+            "prefix": "?> ",
+            "nick": "Rodney"
         },
         {
             "prefix": "!",
-            "nick": "Sequell"
+            "nick": "Rodney"
         }
     ],
     "subreddits": [
         {
-            "subreddit": "roguelikes",
-            "target_channel": "##reddit-roguelikes"
-        },
-        {
-            "subreddit": "dcss",
-            "target_channel": "##reddit-roguelikes"
+            "subreddit": "roguelikes-links",
+            "target_channel": "##reddit-roguelikes-links"
         },
         {
             "subreddit": "roguelikedev",
-            "target_channel": "##reddit-roguelikes"
-        }
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "ADOM",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "bindingofisaac",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "brogueforum",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "cataclysmdda",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "cavesofqud",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "cogmind",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "necrodancer",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "dcss",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "Dungeonmans",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "dredmor",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "dwarffortress",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "Elona",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "ftlgame",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "JupiterHell",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "neoscavenger",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "nethack",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "pixeldungeon",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "SilRL",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "spelunky",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "ToME4",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "thegroundgivesway",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "urw",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "VanillaBagelRL",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "WarsimRPG",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "wayward",
+            "target_channel": "##reddit-roguelikes-links"
+        },
+        {
+            "subreddit": "WazHack",
+            "target_channel": "##reddit-roguelikes-links"
+        },
     ],
-    "irc_nick": "SophosTwo",
+    "irc_nick": "SophosThree",
     "irc_nickserv_password": "REDACTED",
-    "irc_ircname": "/r/roguelikes bot for ##reddit-roguelikes",
+    "irc_ircname": "/r/roguelikes bot for ##reddit-roguelikes-links",
     "irc_server": "irc.freenode.org",
     "irc_port": 6667,
     "redis_host": "localhost",
