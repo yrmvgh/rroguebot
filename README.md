@@ -26,14 +26,14 @@ Requirements for running unit tests:
 
 Running unit tests:
 
-   prove -Ilib t
+   - prove -Ilib t
 
 To fully kill the bot, you could do something like (beware):
+
    `killall perl`
 
 The first run of this bot will probably spam with links. You can kill the bot and restart it. It should stop spamming.
 
-# This bot is free software.  See the COPYING file included in this distribution
-for licensing terms.
+# This bot is free software.  See the COPYING file included in this distribution for licensing terms.
 
 Copyright (c) 2011 Colin Wetherbee <cww@denterprises.org>
