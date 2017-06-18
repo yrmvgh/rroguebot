@@ -128,10 +128,10 @@
         {
             "subreddit": "WazHack",
             "target_channel": "##reddit-roguelikes-links"
-        },
+        }
     ],
-    "irc_nick": "SophosThree",
-    "irc_nickserv_password": "REDACTED",
+    "irc_nick": "HERE BE SOMETHING",
+    "irc_nickserv_password": "HERE IS SOMETHING",
     "irc_ircname": "/r/roguelikes bot for ##reddit-roguelikes-links",
     "irc_server": "irc.freenode.org",
     "irc_port": 6667,
