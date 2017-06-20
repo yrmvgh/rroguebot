@@ -31,6 +31,9 @@ Running unit tests:
 To fully kill the bot, you could do something like (beware):
 
    `killall perl`
+   `killall tail`
+
+Note that you will need to restart the bot at 12 hours (sooner than too late), because at some point it stops logging any IRC activity.
 
 The first run of this bot will probably spam with links. You can kill the bot and restart it. It should stop spamming.
 
